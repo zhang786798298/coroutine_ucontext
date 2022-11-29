@@ -14,9 +14,9 @@
 
 ##快速体验
 * mkdir build
-make
-生成静态库
+  make
+  生成静态库
 
 * cd main 
-make
-生成测试可执行文件
+  make
+  生成测试可执行文件
