@@ -3,7 +3,7 @@
 #include <iostream>
 #include "waitgroup.h"
 #include "channel.h"
-
+#include "defer.h"
 int _cmain(int32_t argc, char** argv)
 {
     Coroutine::WaitGroup wg;
@@ -43,7 +43,10 @@ int _cmain(int32_t argc, char** argv)
     });
     wg.Wait();
     
-    std::cout<<"hello test end" << std::endl;
+    defer([=](){
+        std::cout<<"defer hello test end" << std::endl;
+    });
+
     return 0;
 }
 

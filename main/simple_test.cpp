@@ -1,8 +1,12 @@
 #include "process.h"
 #include <iostream>
+#include "defer.h"
 
 int _cmain(int32_t argc, char** argv)
 {
+    defer([=](){
+        std::cout<<"defer hello test end" << std::endl;
+    });
     std::cout<<"hello test" << std::endl;
     Coroutine::Go([=](){
         std::cout<<"go test1"<<std::endl;
@@ -21,7 +25,7 @@ int _cmain(int32_t argc, char** argv)
             Coroutine::Sleep(1);
         }
     });
-    std::cout<<"hello test end" << std::endl;
+    
     return 0;
 }
 

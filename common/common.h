@@ -3,6 +3,7 @@
 #include <thread>
 #include <sstream>
 #include <chrono>
+#include <time.h>
 
 #if defined(__linux__)
 // 分支预测
@@ -50,4 +51,14 @@ namespace Common
         auto ms = duration_cast<milliseconds>(now.time_since_epoch());
         return ms;
     }
+
+	inline bool IsSameDay(time_t day1, time_t day2)
+	{
+		tm* t = std::localtime(&day1);
+		int y1 = t->tm_year, d1 = t->tm_yday;
+		t = std::localtime(&day2);
+		if (y1 == t->tm_year && d1 == t->tm_yday)
+			return true;
+		return false;
+	}
 }

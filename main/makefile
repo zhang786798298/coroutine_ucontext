@@ -1,7 +1,7 @@
 STATIC_LIB = ../libcoroutine.a
 
-LDFLAGS = -ldl -lpthread -lnsl -lm -lrt -lutil 
-
+#LDFLAGS =-L./ -lcoroutine -ldl -lpthread -lnsl -lm -lrt -lutil
+LDFLAGS =-ldl -lpthread -lnsl -lm -lrt -lutil
 OBJECT_PATH ?= ../build
 
 INCLUDE = -I../common/ -I../coroutine/
@@ -11,7 +11,13 @@ CXXFLAGS = -Wall $(INCLUDE) -g -D__linux__ -std=c++17 -m64
 
 .PHONY : all clean
 
-all:channel_test
+all:hook_test
+
+hook_test:hook_test.o
+	$(CXX) hook_test.o $(STATIC_LIB) $(LDFLAGS) -o $@
+
+hook_test.o:hook_test.cpp
+	$(CXX) $(CXXFLAGS) -c -o $@ $<   
 
 channel_test:channel_test.o
 	$(CXX) channel_test.o $(STATIC_LIB) $(LDFLAGS) -o $@
@@ -35,3 +41,4 @@ clean:
 	rm -rf mutex_test mutex_test.o;
 	rm -rf simple_test simple_test.o;
 	rm -rf channel_test channel_test.o;
+	rm -rf hook_test hook_test.o;
